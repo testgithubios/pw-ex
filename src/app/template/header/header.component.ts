@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'app-header',
@@ -8,6 +9,7 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
     pushRightClass: string = 'push-right';
+    currentUser: User;
 
     constructor(public router: Router) {
         this.router.events.subscribe(val => {
@@ -19,6 +21,9 @@ export class HeaderComponent implements OnInit {
                 this.toggleSidebar();
             }
         });
+        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        
+        console.log(this.currentUser);
     }
 
     ngOnInit() {}
@@ -39,6 +44,6 @@ export class HeaderComponent implements OnInit {
     }
 
     onLoggedout() {
-        localStorage.removeItem('isLoggedin');
+        localStorage.removeItem('currentUser');
     }
 }
